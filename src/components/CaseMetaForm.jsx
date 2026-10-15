@@ -65,7 +65,7 @@ const CaseMetaForm = ({ initial, submitLabel = 'Allocate Case', onSubmit }) => {
             {clients.map((c) => <option key={c['Client ID']} value={c['Client Name']}>{c['Client Name']}</option>)}
           </select>
         </Field>
-        <Field label="Branch" hint={!branches.length ? 'Add branches under Masters → Branches' : ''}>
+        <Field label="Branch" hint={!branches.length ? 'Add branches from the Branches page in the sidebar' : ''}>
           <select className={inputCls} value={form.Branch} onChange={(e) => set('Branch', e.target.value)}>
             <option value="">Select branch</option>
             {branchOptions.map((b) => <option key={b['Branch ID']} value={b['Branch Name']}>{b['Branch Name']} ({b.City})</option>)}

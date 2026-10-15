@@ -9,7 +9,7 @@ import SectionForm from '../components/SectionForm';
 import CaseMetaForm from '../components/CaseMetaForm';
 import { PhotoCapture } from '../components/Photos';
 import { Card, Loading, StatusBadge, Button, Modal, Empty, inputCls } from '../components/ui';
-import { SECTIONS, PHOTO_SECTIONS, requiredSectionKeys, cleanSection, defaultsFor, displayValue } from '../lib/sections';
+import { SECTIONS, PHOTO_SECTIONS, requiredSectionKeys, cleanSection, defaultsFor, displayValue, isVisible } from '../lib/sections';
 import { validateCase } from '../lib/validation';
 import { generateComments } from '../lib/comments';
 import { fmtDateTime, fmtDuration, tatHours, hoursBetween, maskAccount } from '../utils/format';
@@ -198,7 +198,7 @@ const CaseDetail = () => {
               <Row k="Report versions" v={String(c['Report Version'] || 0)} />
               {c['Reviewer Note'] && <Row k="Last reviewer note" v={c['Reviewer Note']} />}
               <h3 className="text-sm font-bold text-gray-900 mt-4 mb-2">Visit</h3>
-              {SECTIONS.visit.fields.map((f) => <Row key={f.key} k={f.label} v={displayValue(f, data.visit?.[f.key])} />)}
+              {SECTIONS.visit.fields.filter((f) => isVisible(f, data.visit)).map((f) => <Row key={f.key} k={f.label} v={displayValue(f, data.visit?.[f.key])} />)}
             </div>
           </div>
         )}
