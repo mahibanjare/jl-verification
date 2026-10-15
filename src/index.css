@@ -1,0 +1,147 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --bg-slate: #f8fafc;
+  --border-gray: #e2e8f0;
+}
+
+body {
+  background-color: var(--bg-slate);
+  color: #1e293b;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-size: 0.875rem;
+  min-height: 100dvh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fade-in 0.4s ease-out; }
+
+/* Print: show only the main content (tables), hide chrome and controls. */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; }
+  aside, header, footer { display: none !important; }
+  main, .lg\:ml-60 { margin: 0 !important; }
+  table { font-size: 11px; }
+}
+
+/* =====================================================================
+ *  Dark mode — toggled by the `.dark` class on <html> (see uiStore).
+ *  Centralized here so it survives the theme color find/replace
+ *  (indigo- -> <brand>-) that the skill runs across src/, including this
+ *  file. Dark surfaces stay neutral slate regardless of brand color.
+ * ===================================================================== */
+.dark body { background-color: #0f172a; color: #e2e8f0; }
+
+.dark .bg-white { background-color: #1e293b; }
+.dark .bg-gray-50 { background-color: #334155; }
+.dark .bg-gray-100 { background-color: #334155; }
+.dark .bg-slate-100 { background-color: #334155; }
+.dark .bg-indigo-50 { background-color: #233043; }
+.dark .bg-indigo-100 { background-color: #334155; }
+.dark .bg-indigo-50\/50 { background-color: rgba(35, 48, 67, 0.5); }
+
+.dark .border-indigo-200 { border-color: #334155; }
+.dark .border-indigo-100 { border-color: #334155; }
+.dark .border-gray-200 { border-color: #475569; }
+.dark .border-gray-100 { border-color: #334155; }
+
+.dark .text-gray-900 { color: #f1f5f9; }
+.dark .text-gray-700 { color: #cbd5e1; }
+.dark .text-gray-600 { color: #cbd5e1; }
+.dark .text-gray-500 { color: #94a3b8; }
+.dark .text-gray-400 { color: #94a3b8; }
+.dark .text-slate-600 { color: #cbd5e1; }
+.dark .text-slate-500 { color: #94a3b8; }
+.dark .text-slate-400 { color: #94a3b8; }
+.dark .placeholder-gray-400::placeholder { color: #64748b; }
+
+.dark .hover\:bg-indigo-50:hover { background-color: #233043; }
+.dark .hover\:bg-indigo-100:hover { background-color: #3a4a63; }
+.dark .hover\:bg-indigo-50\/50:hover { background-color: rgba(35, 48, 67, 0.5); }
+.dark .hover\:bg-gray-50:hover { background-color: #334155; }
+.dark .hover\:bg-gray-100:hover { background-color: #334155; }
+.dark .focus\:bg-white:focus { background-color: #334155; }
+
+/* Red accents (delete / sign-out) tuned for dark surfaces. */
+.dark .bg-red-50 { background-color: rgba(239, 68, 68, 0.12); }
+.dark .border-red-200 { border-color: rgba(239, 68, 68, 0.3); }
+.dark .text-red-600 { color: #f87171; }
+.dark .text-red-500 { color: #f87171; }
+.dark .hover\:bg-red-50:hover { background-color: rgba(239, 68, 68, 0.2); }
+
+/* Dark-mode extras for components added on top of the template. */
+.dark .bg-indigo-50\/30 { background-color: rgba(35, 48, 67, 0.4); }
+.dark .bg-indigo-50\/40 { background-color: rgba(35, 48, 67, 0.4); }
+.dark .bg-slate-50 { background-color: #233043; }
+.dark .border-slate-200 { border-color: #334155; }
+.dark .hover\:bg-indigo-50\/50:hover { background-color: rgba(35, 48, 67, 0.5); }
+
+/* =====================================================================
+ *  PDF REPORT (A4, Jain & Lunkad letterhead). Explicit colours so the
+ *  report is always black-on-white, even when the app is in dark mode.
+ * ===================================================================== */
+.r-root { height: 100dvh; overflow-y: auto; background: #e5e7eb; color: #000; padding-bottom: 24px; }
+.dark .r-root { background: #0f172a; }
+.r-toolbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 12px; padding: 10px 16px; background: #fff; border-bottom: 1px solid #c7d2fe; color: #111827; flex-wrap: wrap; }
+.r-tb-info { flex: 1; font-size: 13px; min-width: 200px; }
+.r-draft-tag { margin-left: 8px; padding: 2px 8px; border-radius: 999px; background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700; }
+.r-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fff; color: #374151; font-weight: 600; font-size: 14px; }
+.r-btn-primary { background: #4f46e5; border-color: #4f46e5; color: #fff; }
+.r-btn:disabled { opacity: .5; cursor: not-allowed; }
+.r-hint { max-width: 210mm; margin: 10px auto; font-size: 12px; color: #4b5563; padding: 0 12px; }
+.dark .r-hint { color: #94a3b8; }
+
+.r-page { width: 210mm; min-height: 297mm; margin: 12px auto; background: #fff; padding: 7mm; box-shadow: 0 4px 18px rgba(0,0,0,.15); box-sizing: border-box; overflow: hidden; }
+.r-frame { position: relative; min-height: calc(297mm - 14mm); border: 3px double #000; padding: 5mm 7mm 4mm; display: flex; flex-direction: column; box-sizing: border-box; font-family: 'Times New Roman', Times, serif; color: #000; font-size: 11pt; line-height: 1.3; }
+.r-head { margin-bottom: 4mm; }
+.r-firm { font-family: Calibri, 'Segoe UI', Georgia, serif; font-size: 25pt; letter-spacing: .5px; line-height: 1.1; }
+.r-sub { font-size: 12.5pt; margin-top: 1mm; }
+.r-contact { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 3mm; line-height: 1.35; }
+.r-right { text-align: left; min-width: 62mm; }
+.r-indent { padding-left: 11mm; }
+.r-rule { margin: 3mm -7mm 0; height: 5px; border-top: 3px solid #000; border-bottom: 1px solid #000; }
+.r-body { flex: 1; }
+.r-foot { display: flex; justify-content: space-between; font-size: 8.5pt; color: #333; border-top: 1px solid #999; padding-top: 1.5mm; margin-top: 2mm; }
+.r-title { text-align: center; font-weight: 700; font-size: 14pt; margin: 2mm 0 3mm; }
+
+.r-table { width: 100%; border-collapse: collapse; font-size: 10.5pt; }
+.r-table th { background: #dbe5f5; border: 1px solid #000; padding: 3px 5px; font-weight: 700; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.r-table td { border: 1px solid #000; padding: 2px 5px; vertical-align: top; }
+.r-table tr { break-inside: avoid; page-break-inside: avoid; }
+.r-summary td { padding: 4px 6px; font-size: 11pt; }
+.r-itr td, .r-itr th { font-size: 9.5pt; }
+.r-c { text-align: right; white-space: nowrap; }
+.r-b { font-weight: 700; }
+.r-commentcell { padding: 8px 10px !important; }
+.r-comment { margin-top: 3mm; font-size: 11pt; text-align: justify; line-height: 1.55; }
+.r-commentcell .r-comment { margin-top: 0; }
+.r-block { margin-bottom: 2mm; }
+
+.r-photos { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 4mm; height: 205mm; }
+.r-photos figure { margin: 0; border: 1px solid #000; display: flex; flex-direction: column; overflow: hidden; }
+.r-photos img { width: 100%; flex: 1; min-height: 0; object-fit: cover; }
+.r-photos figcaption { font-size: 8.5pt; padding: 2px 4px; border-top: 1px solid #000; line-height: 1.3; }
+.r-ph { flex: 1; display: flex; align-items: center; justify-content: center; color: #888; font-size: 10pt; }
+
+.r-stamp { display: flex; align-items: flex-end; gap: 12mm; min-height: 32mm; margin-top: 6mm; }
+.r-stamp img { max-height: 34mm; max-width: 60mm; object-fit: contain; }
+.r-disclaimer { font-size: 10pt; text-align: justify; line-height: 1.4; }
+.r-watermark { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 110pt; font-weight: 800; color: rgba(220, 38, 38, .08); transform: rotate(-30deg); pointer-events: none; }
+
+@media print {
+  @page { size: A4; margin: 0; }
+  html, body, #root { height: auto !important; overflow: visible !important; background: #fff !important; }
+  .r-root { height: auto; overflow: visible; background: #fff; padding: 0; }
+  .r-page { margin: 0; box-shadow: none; page-break-after: always; break-after: page; }
+  .r-page:last-child { page-break-after: auto; break-after: auto; }
+}

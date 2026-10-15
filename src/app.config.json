@@ -1,0 +1,39 @@
+{
+  "appName": "JL Verify — FI / CPV",
+  "theme": "indigo",
+  "logo": "",
+  "auth": true,
+  "loginSheet": "Login",
+  "modules": [
+    {
+      "key": "clients",
+      "label": "Clients (Banks)",
+      "sheet": "Clients",
+      "icon": "Landmark",
+      "autoId": true,
+      "idColumn": "Client ID",
+      "idPrefix": "CL-",
+      "fields": [
+        { "key": "Client Name", "label": "Bank / NBFC Name", "type": "text", "required": true },
+        { "key": "Contact Person", "label": "Contact Person", "type": "text" },
+        { "key": "Email", "label": "Email", "type": "email" },
+        { "key": "Phone", "label": "Phone", "type": "tel", "maxLength": 15 }
+      ]
+    },
+    {
+      "key": "branches",
+      "label": "Branches",
+      "sheet": "Branches",
+      "icon": "Building2",
+      "autoId": true,
+      "idColumn": "Branch ID",
+      "idPrefix": "BR-",
+      "groupBy": "Client",
+      "fields": [
+        { "key": "Client", "label": "Client", "type": "lookup", "required": true, "lookupSheet": "Clients", "lookupColumn": "Client Name" },
+        { "key": "Branch Name", "label": "Branch Name", "type": "text", "required": true },
+        { "key": "City", "label": "City / Location", "type": "text", "required": true }
+      ]
+    }
+  ]
+}
