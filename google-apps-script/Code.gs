@@ -500,19 +500,35 @@ function createCases_(b, u) {
   return { created: nos };
 }
 
+// Case numbers are never reused, even after a case is deleted: the highest
+// number ever issued is kept in Script Properties (per year). Called under
+// the script lock (createCases is a write action).
 function nextCaseNos_(sh, headers, count) {
   const year = Utilities.formatDate(new Date(), TZ, 'yyyy');
   const prefix = CASE_PREFIX + '-' + year + '-';
-  const col = headers.indexOf('Case No') + 1;
-  let max = 0;
-  if (sh.getLastRow() >= 2) {
-    sh.getRange(2, col, sh.getLastRow() - 1, 1).getValues().forEach((r) => {
-      const s = String(r[0]);
-      if (s.indexOf(prefix) === 0) max = Math.max(max, parseInt(s.slice(prefix.length), 10) || 0);
-    });
+  const props = PropertiesService.getScriptProperties();
+  const key = 'CASE_SEQ_' + year;
+  const numOf = (v) => {
+    const s = String(v || '');
+    return s.indexOf(prefix) === 0 ? (parseInt(s.slice(prefix.length), 10) || 0) : 0;
+  };
+  const maxIn = (sheet, colName) => {
+    if (!sheet || sheet.getLastRow() < 2) return 0;
+    const col = headers_(sheet).indexOf(colName) + 1;
+    if (col < 1) return 0;
+    return sheet.getRange(2, col, sheet.getLastRow() - 1, 1).getValues()
+      .reduce((m, r) => Math.max(m, numOf(r[0])), 0);
+  };
+  let max = Math.max(Number(props.getProperty(key)) || 0, maxIn(sh, 'Case No'));
+  // First run with the counter: also count numbers that only survive in the
+  // Audit / Reports history (cases deleted before this counter existed).
+  if (!props.getProperty(key)) {
+    const ss = ss_();
+    max = Math.max(max, maxIn(ss.getSheetByName('Audit'), 'Case No'), maxIn(ss.getSheetByName('Reports'), 'Case No'));
   }
   const out = [];
   for (let i = 1; i <= count; i++) out.push(prefix + ('000000' + (max + i)).slice(-6));
+  props.setProperty(key, String(max + count));
   return out;
 }
 
