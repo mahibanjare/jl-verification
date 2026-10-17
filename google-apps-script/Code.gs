@@ -113,7 +113,7 @@ const ACTIONS = {
   listExecutives:      { roles: STAFF, run: listExecutives_ },
 
   listMaster:          { roles: ALL, run: listMaster_ },
-  saveMaster:          { roles: ['ADMIN'], write: true, run: saveMaster_ },
+  saveMaster:          { roles: STAFF, write: true, run: saveMaster_ },   // reviewer: add only; edit = admin
   deleteMaster:        { roles: ['ADMIN'], write: true, run: deleteMaster_ },
 
   listCases:           { roles: ALL, run: listCases_ },
@@ -333,7 +333,16 @@ function saveMaster_(b, u) {
   const rec = {};
   t.headers.forEach((h) => { if (h !== 'Timestamp' && h !== cfg.idColumn && b.record && b.record[h] !== undefined) rec[h] = String(b.record[h]).trim(); });
   if (!rec[cfg.nameCol]) throw new Error(cfg.nameCol + ' is required');
+  const norm = (s) => String(s || '').trim().toLowerCase();
+  if (!b.matchValue) {
+    // Adding from the allocation form: never create the same client twice,
+    // or the same branch twice under one client — reuse the existing row.
+    const dup = t.rows.filter((x) => norm(x[cfg.nameCol]) === norm(rec[cfg.nameCol])
+      && (b.sheet !== 'Branches' || norm(x.Client) === norm(rec.Client)))[0];
+    if (dup) return { id: String(dup[cfg.idColumn]), existed: true };
+  }
   if (b.matchValue) {
+    if (u.role !== 'ADMIN') throw new Error('Only an admin can edit ' + b.sheet);
     const r = t.rows.filter((x) => String(x[cfg.idColumn]) === String(b.matchValue))[0];
     if (!r) throw new Error('Record not found');
     writeRow_(t, r, rec);
@@ -343,6 +352,7 @@ function saveMaster_(b, u) {
     rec[cfg.idColumn] = nextId_(t.rows.map((x) => x[cfg.idColumn]), cfg.prefix);
     append_(b.sheet, rec);
     audit_('', u.userId, 'CREATE_' + b.sheet.toUpperCase(), rec[cfg.idColumn] + ' ' + rec[cfg.nameCol]);
+    return { id: rec[cfg.idColumn] };
   }
   return {};
 }
