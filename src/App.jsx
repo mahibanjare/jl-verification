@@ -11,7 +11,6 @@ const CaseDetail = lazy(() => import('./pages/CaseDetail'));
 const Report = lazy(() => import('./pages/Report'));
 const MyCases = lazy(() => import('./pages/MyCases'));
 const FieldCase = lazy(() => import('./pages/FieldCase'));
-const Records = lazy(() => import('./pages/Records'));
 const Users = lazy(() => import('./pages/Users'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Audit = lazy(() => import('./pages/Audit'));
@@ -47,7 +46,6 @@ function App() {
             <Route path="allocate" element={guard(<Allocate />, STAFF)} />
             <Route path="my-cases" element={guard(<MyCases />, ['FIELD_EXEC'])} />
             <Route path="field/:caseNo" element={guard(<FieldCase />, ['FIELD_EXEC'])} />
-            <Route path="m/:key" element={guard(<Records />, ['ADMIN'])} />
             <Route path="users" element={guard(<Users />, ['ADMIN'])} />
             <Route path="settings" element={guard(<Settings />, ['ADMIN'])} />
             <Route path="audit" element={guard(<Audit />, ['ADMIN'])} />

@@ -55,9 +55,9 @@ Browser me http://localhost:5173 kholo. Login **admin / admin123** → turant **
 
 ## Step 4 — First-time configuration (5 min, as Admin)
 
-1. **Clients (Banks)**: HDFC Bank, Bajaj Finance, … add karo.
-2. **Branches**: har client ki branch aur city add karo. City report me "Location" ke roop me chhapti hai.
-3. **Users & Access**: team banao.
+1. **Clients aur Branches** ke liye alag page nahi hai. **Allocate Case** form me Client dropdown me India ke saare bade banks/NBFC pehle se hain; jo na ho use **"+ नया Client जोड़ें"** se jodo. Branch dropdown me **"+ नई Branch जोड़ें"** se branch ka naam aur City bharo (City report me "Location" ke roop me chhapti hai).
+   Naam sudharna ya hatana ho to Google Sheet ke **Clients** / **Branches** tab me seedha badlo.
+2. **Users & Access**: team banao.
 
    | Role | Kya kar sakta hai |
    |---|---|
@@ -67,7 +67,7 @@ Browser me http://localhost:5173 kholo. Login **admin / admin123** → turant **
 
    - Admin/Reviewer ka **Email** zaroor bharo, kyunki email alerts usi par jaate hain.
    - Kisi ko hatana ho toh **Inactive** kar do. Wo turant logout ho jayega aur purana record bacha rahega.
-4. **Settings & Alerts → Report letterhead**: firm details aur disclaimer pehle se bhare hain. **Stamp** aur **Signature** ki image (PNG) upload karo.
+3. **Settings & Alerts → Report letterhead**: firm details aur disclaimer pehle se bhare hain. **Stamp** aur **Signature** ki image (PNG) upload karo.
 
 ## Step 5 — Notifications: Email + Telegram
 

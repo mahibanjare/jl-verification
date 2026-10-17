@@ -1,6 +1,7 @@
 // =====================================================================
-//  App-wide constants. Masters (Clients, Branches) come from
-//  src/app.config.json; the case workflow is defined in src/lib/.
+//  App-wide constants. The case workflow is defined in src/lib/.
+//  Clients and Branches are added from the Allocate Case form and edited
+//  directly in the Google Sheet (no separate tabs in the app).
 // =====================================================================
 import appConfig from './app.config.json';
 
@@ -9,11 +10,6 @@ export const THEME = appConfig.theme || 'indigo';
 export const LOGO = appConfig.logo || '';
 export const AUTH_ENABLED = true;
 export const LOGIN_SHEET = appConfig.loginSheet || 'Login';
-
-// Master-data modules (generic CRUD pages).
-export const MODULES = appConfig.modules || [];
-export const getModule = (key) => MODULES.find((m) => m.key === key);
-export const matchColumnFor = (mod) => ((mod.autoId && mod.idColumn) ? mod.idColumn : 'Timestamp');
 
 // ----------------------------- Roles ---------------------------------
 export const ROLES = ['ADMIN', 'REVIEWER', 'FIELD_EXEC'];
@@ -37,7 +33,6 @@ export const MENU_ITEMS = [
   { path: '/cases', label: 'All Cases', icon: 'FolderKanban', roles: STAFF },
   { path: '/allocate', label: 'Allocate Case', icon: 'FilePlus2', roles: STAFF },
   { path: '/my-cases', label: 'My Cases', icon: 'ClipboardList', roles: ['FIELD_EXEC'] },
-  ...MODULES.map((m) => ({ path: `/m/${m.key}`, label: m.label, icon: m.icon || 'Table', roles: ['ADMIN'] })),
   { path: '/users', label: 'Users & Access', icon: 'UserCog', roles: ['ADMIN'] },
   { path: '/settings', label: 'Settings & Alerts', icon: 'Settings', roles: ['ADMIN'] },
   { path: '/audit', label: 'Audit Log', icon: 'History', roles: ['ADMIN'] },

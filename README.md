@@ -19,7 +19,7 @@ React + Vite + Tailwind, with a Google Sheet (via Apps Script) as the backend.
 | Allocation + CSV bulk upload | `src/pages/Allocate.jsx` |
 | Users, roles, settings, Email + Telegram alerts | `src/pages/Users.jsx`, `src/pages/Settings.jsx`, `src/pages/Profile.jsx` |
 | Backend (auth, roles, sessions, notifications, triggers) | `google-apps-script/Code.gs` |
-| Masters config (Clients, Branches) | `src/app.config.json` |
+| Client dropdown list (Indian banks / NBFCs) | `src/lib/banks.js` |
 
 ## Commands
 
